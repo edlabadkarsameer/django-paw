@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style1.css' %}">
+    <title>Prepython Register</title>
+</head>
+<body>
+    <div class = "login-page">
+    <div class="form">
+        <form class="login-form" action ="/register" method = "post" class="register-form">
+            {% csrf_token %}
+
+            <input type = "text" id = "username" name = "username" placeholder = "Username" required>
+            <br>
+
+            <input type = "text" id = "fname" name = "fname" placeholder = "Firstname" required>
+            <br>
+
+            <input type = "text" id = "lname" name = "lname" placeholder = "Lastname" rfname
+            <br></br>
+
+            <input type = "email" id = "email" name = "email" placeholder = "Email" required>
+            <br>
+
+            <input type = "password" id = "pass1" name = "pass1" placeholder = "Password" required>
+            <br>
+
+            <input type = "password" id = "pass2 name = "pass2" placeholder = "Confirm Password" required>
+            <br>
+            <button type="submit">Register</button>
+        </form>
+
+        </div>
+    </div>
+</body>
+</html>

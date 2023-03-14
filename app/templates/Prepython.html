@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/interview.css' %}">
+    <title>Prepython</title>
+</head>
+<body>
+<header>
+  <h1>Main page heading here</h1>
+</header>
+
+<div id="main">
+    {% if user.is_authenticated %}
+    <h1>Welcome, {{ fname }}... </h1>
+        {% endif %}
+    </div>
+        <img id="webcam" src="{% url 'stream_video' %}" width="500" height=""/>
+
+
+<div id = "frame">
+    <iframe src="{% url 'interview' %}" height="600" width="600" title="Iframe Example" style="border: none"></iframe>
+</div>
+
+</body>
+</html>

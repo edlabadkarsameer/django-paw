@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+
+<div class="hero-section">
+  <h1>{{ question }}</h1>
+<form id="answer-form" method="post" action="{% url 'interview' %}">
+    {% csrf_token %}
+
+
+  <textarea id="answer-box" name="answer" disabled></textarea>
+  <br>
+  <button id="start-btn" class ="but">Speak</button>
+  <button id="stop-btn" class ="but" disabled>Stop</button>
+  <button id="submit-btn" class ="but" disabled>Submit</button>
+  <button id="next-btn" disabled></button>
+</form>
+
+  </div>
+  <script>
+    const startButton = document.getElementById('start-btn');
+    const stopButton = document.getElementById('stop-btn');
+    const answerBox = document.getElementById('answer-box');
+    const submitButton = document.getElementById('submit-btn');
+    const nextButton = document.getElementById('next-btn');
+
+    // Create a new speech recognition object
+    const recognition = new window.webkitSpeechRecognition();
+
+    // Set the language to English
+    recognition.lang = 'en-US';
+
+    // Start the speech recognition when the user clicks the Start button
+    startButton.addEventListener('click', () => {
+      recognition.start();
+      startButton.disabled = true;
+      stopButton.disabled = false;
+      answerBox.disabled = false;
+      submitButton.disabled = false;
+      answerBox.value = '';
+      answerBox.focus();
+    });
+
+    // Stop the speech recognition when the user clicks the Stop button
+    stopButton.addEventListener('click', () => {
+      recognition.stop();
+      startButton.disabled = false;
+      stopButton.disabled = true;
+    });
+
+    // Handle the speech recognition results
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      answerBox.value = transcript;
+    };
+
+    // Submit the answer when the user clicks the Submit button
+    submitButton.addEventListener('click', () => {
+      document.getElementById('answer-form').submit();
+      nextButton.disabled = false;
+    });
+
+    // Move to the next question when the user clicks the Next button
+    nextButton.addEventListener('click', () => {
+      window.location.href = "{{ next_url }}";
+    });
+    // JavaScript code
+window.onload = function() {
+  var time = 0;
+  var intervalId = null;
+  var timerElement = document.getElementById('timer');
+
+  // function to update timer
+  function updateTime() {
+    time++;
+    var minutes = Math.floor(time / 60);
+    var seconds = time % 60;
+    var formattedTime = (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+    timerElement.innerText = formattedTime;
+  }
+
+  // start timer
+  intervalId = setInterval(updateTime, 1000);
+
+  // reset timer on refresh
+  if (performance.navigation.type == 1) {
+    clearInterval(intervalId);
+    time = 0;
+    updateTime();
+    intervalId = setInterval(updateTime, 1000);
+  }
+}
+  </script>
+{% endblock %}
